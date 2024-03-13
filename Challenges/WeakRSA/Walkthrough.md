@@ -1,8 +1,7 @@
 # Challenge Description
 Can you decrypt the message and get the flag?
 
-Zip Password
-`hackthebox`
+Zip Password: `hackthebox`
 SHA-256: `1cbf890e7a0fe8b404597b565da96c388e5653937631e2dc8710ede9d15bdb7d`
 # Solution
 
