@@ -39,17 +39,18 @@ Service detection performed. Please report any incorrect results at https://nmap
 ```
 
 /login.php
-![[Pasted image 20231226135434.png]]
+![Heist Login Page](Screenshots\20231226135434.png)
 
 **After clicking on the "Login as Guest" button we are redirected to /issues.php.**
 
 /issues.php
-![[Pasted image 20231226140232.png]]
+![Heist Issues Page](Screenshots\20231226140232.png)
 
 **Clicking on the "Attachment" in the issues comment takes us to /attachments/config.txt**
 
 /attachments/config.txt
-![[Pasted image 20231226140456.png]]
+![Heist Issues Page](Screenshots\20231226140456.png)
+
 
 **Fuzzing for directories gives us the following information**
 ```bash
