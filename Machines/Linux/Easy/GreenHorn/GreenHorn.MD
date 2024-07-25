@@ -1,15 +1,12 @@
 Author: d3lta0n3
 Date: 7/23/2024
 
-
 # Setup
-
-
+ 
 1. Create enviornmental variables from the Target IP Address that is generated for the machine.
-
 ```bash
 export TARGET_IP=10.129.134.162
-export TARGET_PORT=80
+export TARGET_PORT=NaN
 export PWN_IP=10.10.14.14
 export PWN_PORT=12346
 ```
@@ -70,7 +67,7 @@ We see that at the bottom of the [Home Page](http://greenhorn.htb/?file=welcome-
 
 This pushes us to pivot to enumerating the PPP service on port 3000. We are taken to a Github-like service that seems to host the files for the HTTP server on port 80. We find a [GreenHorn Repo](http://greenhorn.htb:3000/GreenAdmin/GreenHorn) with the description that "We believe in open source.". Looking at the `login.php` file, we see very interesting information about the authentication method on lines 38-48.
 
-/login.php
+**/login.php**
 ```php
 //If pluck is installed:
 else {
@@ -87,7 +84,7 @@ else {
 
 This information disclosure indicates that we can find information about the admin password and token in the respective `data/settings/pass.php` and `data/settings/token.php` files.
 
-/data/settings/pass.php
+**/data/settings/pass.php**
 ```php
 <?php
 $ww = 'd5443aef1b64544f3685bf112f6c405218c573c7279a831b1fe9612e3a4d770486743c5580556c0d838b51749de15530f87fb793afdcc689b6b39024d7790163';
