@@ -66,4 +66,4 @@ void flag(int param_1,int param_2)
 
 Additionally the host for the project is `94.237.56.255:31992`
 ## Flag
-`HTB{s1mpl3_Wi3n3rs_4tt4ck`
+`HTB{s1mpl3_Wi3n3rs_4tt4ck}`
