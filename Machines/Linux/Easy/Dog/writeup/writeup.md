@@ -1,6 +1,6 @@
-# HTB Write-Up: [Challenge/Box Name]
+# HTB Write-Up: Dog
 
-![BOX Screenshot](../files/box.screenshot)
+![BOX Screenshot](../files/dog-box.screenshot.png)
 
 ## Table of Contents
 
@@ -16,13 +16,12 @@
 
 ## Challenge Overview
 
-- **Name**: [Challenge/Box Name]
-- **Category**: [Category Type]
-- **Difficulty**: [Difficulty Level]
-- **Description**: Brief summary of what the challenge involves.
-- **Created By**: [Created By]
-- **Co-Authors**: [Tier]
-- **Date**: [2/17/2025]
+- **Name**: Dog
+- **Category**: Linux
+- **Difficulty**: Easy
+- **Description**: N/A
+- **Created By**: `FisMatHack`
+- **Date**: Released on 08 Mar 2025
 
 ---
 
