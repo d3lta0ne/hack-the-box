@@ -71,6 +71,16 @@ def binary_to_ascii(binary_string):
 
 
 def main():
+    """
+    Main function to read input data, test various logic functions, and check for readable ASCII output.
+    The function performs the following steps:
+    1. Reads input data from a CSV file.
+    2. Tests various logic functions on the input data.
+    3. Checks each result for readable ASCII text.
+    4. Specifically checks a target logic function for readable ASCII output.
+    Note:
+    - The function currently prints the ASCII output of the target logic function.
+    """
     # For the actual file, you can use:
     input_data = read_csv('..\hw_lowlogic\input.csv')
 
