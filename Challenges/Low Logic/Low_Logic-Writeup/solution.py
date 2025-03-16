@@ -1,11 +1,11 @@
+"""Module for parsing input.csv"""
 import csv
-import binascii
 
 
 def read_csv(file_path):
     """Read the CSV file and return the rows of binary inputs."""
     inputs = []
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
             inputs.append({
