@@ -1,6 +1,6 @@
 # HTB Write-Up: [Challenge/Box Name]
 
-[BOX Screenshot](../files/box.screenshot)
+![BOX Screenshot](../files/box.screenshot)
 
 ## Table of Contents
 
