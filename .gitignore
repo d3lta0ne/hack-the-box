@@ -1,1 +1,27 @@
 *.ovpn
+
+# All Hidden Files
+.*
+
+# Virtual Environment patterns
+env/
+venv/
+ENV/
+.env/
+.venv/
+virtualenv/
+.virtualenv/
+*env*/
+.python-version
+
+# Specific to Pipenv
+Pipfile.lock
+
+# Specific to conda
+.conda/
+conda-env/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
