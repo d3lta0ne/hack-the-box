@@ -82,7 +82,7 @@ def main():
     - The function currently prints the ASCII output of the target logic function.
     """
     # For the actual file, you can use:
-    input_data = read_csv('..\hw_lowlogic\input.csv')
+    input_data = read_csv(r'..\hw_lowlogic\input.csv')
 
     # Test various logic functions
     logic_results = test_logic_functions(input_data)
