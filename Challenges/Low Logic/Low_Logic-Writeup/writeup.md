@@ -3,12 +3,9 @@
 ## Table of Contents
 
 1. [Challenge Overview](#challenge-overview)
-2. [Reconnaissance](#reconnaissance)
-3. [Exploitation](#exploitation)
-4. [Post-Exploitation](#post-exploitation)
-5. [Privilege Escalation](#privilege-escalation)
-6. [Answer](#answer)
-7. [Conclusion](#conclusion)
+2. [Setup](#setup)
+3. [Methodology](#methodology)
+4. [Answer](#answer)
 
 ---
 
@@ -19,7 +16,6 @@
 - **Difficulty**: Very Easy
 - **Description**: I have this simple chip, I want you to understand how it's works and then give me the output.
 - **Created By**: 0xSn4k3000
-- **Date**: 3/15/2025
 
 ## Setup
 
@@ -58,7 +54,7 @@ pip install -r requirements.txt
 python solve_lowlogic.py
 ```
 
-5. Decative the Virtual Environment
+5. Deactive the Virtual Environment
 
 ```bash
 # On Windows/macOS/Linux with venv
@@ -82,6 +78,6 @@ After unzipping `Low Logic.zip` we see that the challenege contains two files `c
 
 [TODO: add basic approach to the problem and solution and high-level what solution should be doing]
 
-## Conclusion
+## Answer
 
 `HTB{4_G00d_Cm05_3x4mpl3}`
