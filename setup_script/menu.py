@@ -1,6 +1,39 @@
+"""
+This module provides a curses-based interactive menu system for selecting options,
+inputting data, and configuring environment variables.
+Functions:
+    _menu_logic(stdscr):
+        Handles the main menu logic using the curses library. Allows the user to:
+        - Select a category from a predefined list.
+        - Input a project name.
+        - Select a difficulty level.
+        - Input an author or team name.
+        - Configure environment variables by entering key-value pairs.
+    run_menu():
+        Wrapper function that initializes the curses environment and runs the
+        _menu_logic function.
+Helper Functions:
+    display_menu(options, title):
+        Displays a menu with a list of options and allows the user to navigate
+        using arrow keys and select an option by pressing Enter.
+    get_user_input(prompt):
+        Displays a prompt and allows the user to input a string. Supports backspace
+        for editing and Enter to confirm the input.
+Returns:
+    A dictionary containing the following keys:
+        - "category": The selected category.
+        - "project_name": The entered project name.
+        - "author": The entered author or team name.
+        - "difficulty": The selected difficulty level.
+        - "env": A dictionary of environment variables (key-value pairs).
+Usage:
+    Call the `run_menu()` function to start the interactive menu system.
+"""
+
 import curses
 
 def _menu_logic(stdscr):
+    """Main menu logic for the curses-based interactive menu system."""
     # Remove curses.curs_set as it is not critical and causes compatibility issues
     stdscr.clear()
     stdscr.refresh()
