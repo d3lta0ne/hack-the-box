@@ -1,17 +1,3 @@
-# project_builder.py
-# This module provides functionality to build a project directory structure based on a given configuration.
-# It includes the `build_project` function, which creates a new project directory by copying a template folder,
-# customizing files with project-specific details, and generating environment variable files.
-# Functions:
-#     - build_project(config): Builds a project directory structure based on the provided configuration.
-# Dependencies:
-#     - os: For interacting with the file system.
-#     - shutil: For copying directory trees.
-#     - datetime: For working with dates.
-#     - slugify (from setup_script.utils): For creating URL-friendly project directory names.
-# Usage:
-#     Import this module and call the `build_project` function with a configuration dictionary to create a new project.
-
 import os
 import shutil
 from datetime import datetime
@@ -44,12 +30,13 @@ def build_project(config):
         - The WRITEUP.md file is updated with placeholders replaced by values from the config.
         - The current date is inserted into the WRITEUP.md file in MM/DD/YYYY format.
     """
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    template_dir = os.path.join(base_dir, 'TEMPLATE')
-    category_dir = os.path.join(base_dir, config['category'])
+    # Set the base directory to the root of the workspace
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    template_dir = os.path.join(base_dir, 'setup_script', 'TEMPLATE')
+    category_dir = os.path.join(base_dir, config['category'], config['difficulty'])
     project_dir = os.path.join(category_dir, slugify(config['project_name']))
 
-    # Ensure category directory exists
+    # Ensure category and difficulty directories exist
     os.makedirs(category_dir, exist_ok=True)
 
     # Check if project directory already exists

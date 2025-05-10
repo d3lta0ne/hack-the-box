@@ -1,113 +1,177 @@
-"""
-This module provides a curses-based interactive menu system for selecting options,
-inputting data, and configuring environment variables.
-Functions:
-    _menu_logic(stdscr):
-        Handles the main menu logic using the curses library. Allows the user to:
-        - Select a category from a predefined list.
-        - Input a project name.
-        - Select a difficulty level.
-        - Input an author or team name.
-        - Configure environment variables by entering key-value pairs.
-    run_menu():
-        Wrapper function that initializes the curses environment and runs the
-        _menu_logic function.
-Helper Functions:
-    display_menu(options, title):
-        Displays a menu with a list of options and allows the user to navigate
-        using arrow keys and select an option by pressing Enter.
-    get_user_input(prompt):
-        Displays a prompt and allows the user to input a string. Supports backspace
-        for editing and Enter to confirm the input.
-Returns:
-    A dictionary containing the following keys:
-        - "category": The selected category.
-        - "project_name": The entered project name.
-        - "author": The entered author or team name.
-        - "difficulty": The selected difficulty level.
-        - "env": A dictionary of environment variables (key-value pairs).
-Usage:
-    Call the `run_menu()` function to start the interactive menu system.
-"""
+import sys
+from typing import Dict, List, Optional, Union
 
-import curses
+from prompt_toolkit import prompt
+from prompt_toolkit.shortcuts import clear
 
-def _menu_logic(stdscr):
-    """Main menu logic for the curses-based interactive menu system."""
-    # Remove curses.curs_set as it is not critical and causes compatibility issues
-    stdscr.clear()
-    stdscr.refresh()
+from setup_script.input_handler import (sanitize_name, validate_ip,
+                                        validate_port)
 
-    # Example menu logic
-    categories = ["challenges", "academy", "machines", "misc"]
-    difficulties = ["Easy", "Medium", "Hard", "Insane"]
+CATEGORIES: List[str] = ["Challenge", "Academy", "Machine", "MISC"]
+DIFFICULTIES: List[str] = ["Easy", "Medium", "Hard", "Insane"]
+PLATFORMS: List[str] = ["Windows", "Linux", "macOS"]
 
-    def display_menu(options, title):
-        current_row = 0
+SESSION_LOG: List[str] = []
+
+class StepCancelled(Exception):
+    pass
+
+def safe_prompt(prompt_text: str, allow_exit: bool = False, allow_back: bool = True) -> str:
+    try:
+        return prompt(prompt_text).strip()
+    except KeyboardInterrupt:
+        if allow_exit:
+            clear()
+            print("Exiting program.")
+            sys.exit(1)
+        if allow_back:
+            raise StepCancelled
+        raise
+
+def numbered_terminal_prompt(title: str, options: List[str], step_num: Optional[int] = None, total_steps: Optional[int] = None, allow_exit: bool = False) -> str:
+    try:
         while True:
-            stdscr.clear()
-            stdscr.addstr(0, 0, title, curses.A_BOLD)
+            clear()
+            for line in SESSION_LOG:
+                print(line)
+            if step_num is not None and total_steps is not None:
+                print(f"\n[Step {step_num} of {total_steps}]")
+            print("\n" + title)
+            for i, option in enumerate(options):
+                print(f" {i+1}. {option}")
+            print(f" {len(options) + 1}. Go Back")
+            print(f" {len(options) + 2}. Quit")
+            answer: str = safe_prompt("\nSelect option by number: ", allow_exit=allow_exit)
+            if answer.isdigit():
+                idx = int(answer)
+                if 1 <= idx <= len(options):
+                    return options[idx - 1]
+                elif idx == len(options) + 1:
+                    raise StepCancelled
+                elif idx == len(options) + 2:
+                    sys.exit(0)
+            print("Invalid selection. Try again.")
+    except StepCancelled:
+        raise
 
-            for idx, option in enumerate(options):
-                if idx == current_row:
-                    stdscr.addstr(idx + 2, 0, option, curses.A_REVERSE)
-                else:
-                    stdscr.addstr(idx + 2, 0, option)
+def get_input(title: str, step_num: Optional[int] = None, total_steps: Optional[int] = None) -> str:
+    try:
+        clear()
+        for line in SESSION_LOG:
+            print(line)
+        if step_num is not None and total_steps is not None:
+            print(f"\n[Step {step_num} of {total_steps}]")
+        print("\n" + title)
+        return safe_prompt(" > ")
+    except StepCancelled:
+        raise
 
-            key = stdscr.getch()
-
-            if key == curses.KEY_UP and current_row > 0:
-                current_row -= 1
-            elif key == curses.KEY_DOWN and current_row < len(options) - 1:
-                current_row += 1
-            elif key in [curses.KEY_ENTER, 10, 13]:
-                return options[current_row]
-
-    def get_user_input(prompt):
-        stdscr.clear()
-        stdscr.addstr(0, 0, prompt, curses.A_BOLD)
-        input_str = ""
+def run_menu() -> Optional[Dict[str, Union[str, Dict[str, str]]]]:
+    try:
+        total_steps: int = 6
         while True:
-            key = stdscr.getch()
-            if key in [10, 13]:  # Enter key
-                break
-            elif key in [8, 127]:  # Backspace key
-                input_str = input_str[:-1]
-                stdscr.clear()
-                stdscr.addstr(0, 0, prompt + input_str, curses.A_BOLD)
-            else:
-                input_str += chr(key)
-                stdscr.addstr(0, 0, prompt + input_str, curses.A_BOLD)
-        return input_str
+            SESSION_LOG.clear()
+            try:
+                current_step = 1
+                category: Optional[str] = None
+                platform: Optional[str] = None
+                project_name: Optional[str] = None
+                difficulty: Optional[str] = None
+                author: Optional[str] = None
+                env_vars: Dict[str, str] = {}
 
-    # Step 1: Choose category
-    category = display_menu(categories, "Select a category:")
+                while current_step >= 1:
+                    if current_step == 1:
+                        try:
+                            category = numbered_terminal_prompt("Select a category:", CATEGORIES, step_num=1, total_steps=total_steps, allow_exit=True)
+                            SESSION_LOG.append(f"Selected category: {category}")
+                            current_step += 1
+                        except StepCancelled:
+                            return None
 
-    # Step 2: Enter project name
-    project_name = get_user_input("Enter the new project name: ")
+                    if current_step == 2:
+                        try:
+                            platform = numbered_terminal_prompt("Select the operating system:", PLATFORMS, step_num=2, total_steps=total_steps)
+                            SESSION_LOG.append(f"Selected platform: {platform}")
+                            current_step += 1
+                        except StepCancelled:
+                            SESSION_LOG.pop()
+                            current_step -= 1
+                            continue
 
-    # Step 3: Choose difficulty
-    difficulty = display_menu(difficulties, "Select a difficulty level:")
+                    if current_step == 3:
+                        try:
+                            raw_input = get_input("Enter the new project name", step_num=3, total_steps=total_steps)
+                            if not raw_input:
+                                raise StepCancelled
+                            project_name = sanitize_name(raw_input)
+                            SESSION_LOG.append(f"Project name: {project_name}")
+                            current_step += 1
+                        except StepCancelled:
+                            SESSION_LOG.pop()
+                            current_step -= 1
+                            continue
 
-    # Step 4: Enter author name
-    author = get_user_input("Enter the author or team name: ")
+                    if current_step == 4:
+                        try:
+                            difficulty = numbered_terminal_prompt("Select a difficulty level:", DIFFICULTIES, step_num=4, total_steps=total_steps)
+                            SESSION_LOG.append(f"Selected difficulty: {difficulty}")
+                            current_step += 1
+                        except StepCancelled:
+                            SESSION_LOG.pop()
+                            current_step -= 1
+                            continue
 
-    # Step 5: Enter environment variables
-    env_vars = {}
-    while True:
-        key = get_user_input("Enter environment variable key (or press Enter to finish): ")
-        if not key:
-            break
-        value = get_user_input(f"Enter value for {key}: ")
-        env_vars[key] = value
+                    if current_step == 5:
+                        try:
+                            author_input = get_input("Enter the author or team name", step_num=5, total_steps=total_steps)
+                            if not author_input:
+                                raise StepCancelled
+                            author = sanitize_name(author_input)
+                            SESSION_LOG.append(f"Author: {author}")
+                            current_step += 1
+                        except StepCancelled:
+                            SESSION_LOG.pop()
+                            current_step -= 1
+                            continue
 
-    return {
-        "category": category,
-        "project_name": project_name,
-        "author": author,
-        "difficulty": difficulty,
-        "env": env_vars
-    }
+                    if current_step == 6:
+                        while True:
+                            try:
+                                key = get_input("Enter environment variable key (leave blank to finish)", step_num=6, total_steps=total_steps)
+                                if not key:
+                                    break
+                                value = get_input(f"Enter value for {key}")
+                                env_vars[key] = value
+                                SESSION_LOG.append(f"ENV {key} = {value}")
+                            except StepCancelled:
+                                break
+                        break
 
-def run_menu():
-    return curses.wrapper(_menu_logic)
+                if all([category, platform, project_name, difficulty, author]):
+                    return {
+                        "category": category,
+                        "platform": platform,
+                        "project_name": project_name,
+                        "author": author,
+                        "difficulty": difficulty,
+                        "env": env_vars,
+                        "target_path": f"{category}/{difficulty}/{project_name}"
+                    }
+                return None
+
+            except StepCancelled:
+                continue
+
+    except KeyboardInterrupt:
+        clear()
+        print("User exited the session.")
+        return None
+
+if __name__ == "__main__":
+    result = run_menu()
+    if result is None:
+        sys.exit(1)
+    clear()
+    print("\nFinal result:")
+    print(result)
