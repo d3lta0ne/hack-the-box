@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "setup-script"
+version = "0.1.0"
+description = "Terminal-based scaffolding tool for HTB-style projects"
+authors = [
+    { name = "Your Name", email = "you@example.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+setup-project = "setup_script.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
