@@ -1,0 +1,3 @@
+[submodule "sysreptor"]
+	path = sysreptor
+	url = https://github.com/Syslifters/sysreptor.git
