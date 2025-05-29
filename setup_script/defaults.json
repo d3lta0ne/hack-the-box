@@ -1,0 +1,17 @@
+{
+  "TARGET_IP": {
+    "prompt": "Enter the target IP",
+    "default": "127.0.0.1",
+    "required": true
+  },
+  "PORT": {
+    "prompt": "Enter the port",
+    "default": "8080",
+    "required": false
+  },
+  "DOMAIN": {
+    "prompt": "Enter the domain",
+    "default": "htb.local",
+    "required": false
+  }
+}
