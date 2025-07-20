@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Breath Taking!!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            background-image: url('en_background.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 20%;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .language-button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            border-radius: 0;
+            border: 2px solid #ffffff;
+            margin-top: 20px;
+        }
+        .language-button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: #ff0000;
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-family: 'Press Start 2P', cursive;
+        }
+    </style>
+</head>
+<body>
+<h1>Just look at the view !!!</h1>
+<div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+<a href="/?lang=fr" class="language-button">Change Language</a>
+</body>
+</html>

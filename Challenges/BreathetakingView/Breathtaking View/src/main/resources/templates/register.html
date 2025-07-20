@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Breath Taking</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            background-image: url('en_background.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 10%;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .form-container {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .form-container a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: #ff0000;
+            margin-top: 10px;
+            font-family: 'Press Start 2P', cursive;
+        }
+    </style>
+</head>
+<body>
+<h1>Create a New Account</h1>
+<div class="form-container">
+    <form action="/register" method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Register</button>
+        <a href="/login">Already have an account? Login here!</a>
+        <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+    </form>
+</div>
+</body>
+</html>
