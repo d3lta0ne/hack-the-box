@@ -16,11 +16,12 @@ export writeup=$PWD;
 export TARGET_LIST;
 
 # Set your variables
-export TARGET="value1"
-export TARGET_IP="value2"
-export PORT="value3"
-export DOMAIN="value4"
-export WORDLIST="value4"
+export TARGET="10.129.67.249"
+export TARGET_IP="10.129.67.249"
+export TARGET_IPv6="2001:db8::ff00:42:8329"
+export PORT=""
+export DOMAIN=""
+export WORDLIST=""
 export OUTPUT_FILE="/files/nmap/initial"
 
 # Wordlist variables
