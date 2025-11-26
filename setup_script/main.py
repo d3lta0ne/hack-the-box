@@ -225,7 +225,10 @@ def display_status(config, current_step, step_number, total_steps):
     print(" Press Ctrl+C to cancel or go back.")
 
 def run_menu(debug, verbose):
-    p = Prompter(debug, verbose)
+    global DEBUG, VERBOSE
+    DEBUG = debug
+    VERBOSE = verbose
+    p = Prompter()
     config = {"category": None, "project_name": None, "author": None, "difficulty": None, "env": {}, "tier": None, "level": None, "type": None}
     steps = ["category", "project_name"]
     academy_fields = ["tier", "level", "type", "difficulty"]
