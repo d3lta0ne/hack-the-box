@@ -1,0 +1,1 @@
+This folder is for any files that are generated during the assessment (i.e. screenshots, images, etc.)

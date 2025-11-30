@@ -56,7 +56,7 @@
 /bin/bash vars.bash
 ```
 
-### Information Gathering
+## Information Gathering
 
 ## Exploitation
 
