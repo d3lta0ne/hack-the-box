@@ -3,6 +3,9 @@
 # All Hidden Files
 .*
 
+# Hide Large PCAPs
+*.pcap
+
 # Virtual Environment patterns
 env/
 venv/
